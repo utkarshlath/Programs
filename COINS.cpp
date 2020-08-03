@@ -1,24 +1,26 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-long long int maximum(long long int n, vector<long long int> dp)
+vector <long long int> dp(1000000,0);
+
+long long int maximum(long long int n)
 {
-    if(dp[n]!=-1)
-        return dp[n];
-    if(n<10)
+    if (n < 1000000)
     {
-        dp[n]=n;
-        return n;
+        if(n<12)
+            return n;
+        if(dp[n]!=0)
+            return dp[n];
     }
-    long long int value = max(n, maximum((n/2),dp)+maximum((n/3),dp)+maximum((n/4),dp));
-    dp[n]=value;
+    long long int value = max(n, maximum(n/2)+maximum(n/3)+maximum(n/4));
+    if (n<1000000)
+        dp[n]=value;
     return value;
 }
 int main()
 {
     long long int n;
-    vector <long long int> dp(1000000,-1);
-    while((scanf("%lld",&n)==1))
-        cout<<maximum(n,dp);
+    while((scanf("%lld",&n)>0))
+        printf("%lld\n",maximum(n));
     return 0;
 }

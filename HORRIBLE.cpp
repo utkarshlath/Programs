@@ -79,6 +79,8 @@ int main()
         long long int n,c;
         cin>>n>>c;
         long long int arr[n] = {0};
+        memset(tree,0,sizeof(tree));
+        memset(lazy,0,sizeof(tree));
         constructTree(arr,n);
         for(long long int i=0;i<c;i++)
         {

@@ -1,60 +1,49 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-int t[101][501];
-
-int knapsack(int budget, int cost[], int fun[], int n)
-{
-    for(int i=0;i<=n;i++)
-    {
-        for(int j=0;j<=budget;j++)
-        {
-            if(i==0&&j==0)
-                t[i][j]=0;
-            if(cost[i-1]<=j)
-            {
-                t[i][j] = max(fun[i-1]+t[i-1][j-cost[i-1]],t[i-1][j]);
-            }
-            else
-                t[i][j]=t[i-1][j];
-        }
-    }
-    int partysum=0, res=t[n][budget];
-    for(int i=0;i<=budget;i++)
-    {
-        if(t[n][i]==res)
-        {
-            budget = i;
-            break;
-        }
-    }
-    for(int i=n;i>0&&res>0;i--)
-    {
-        if(res==t[i-1][budget])
-            continue;
-        else
-        {
-            partysum += cost[i-1];
-            budget -= cost[i-1];
-            res -= fun[i-1];
-        }   
-    }
-    return partysum;
-}
 int main()
 {
     while(true)
     {
-        int budget,n;
+        int budget,n,i,j;
         cin>>budget>>n;
         if(budget==0&&n==0)
             break;
-        int fun[n], cost[n];
+        int **t = (int **) calloc( sizeof(int *) , n+1 );
+	    for ( i = 0 ; i < n+1 ; i++ ) {
+		    t[i] = (int *) calloc ( sizeof(int) , budget+1 );
+	    }
+
+        int * fun = (int *) malloc ( n * sizeof(int));
+        int * cost = (int *) malloc ( n * sizeof(int));
+
         for(int i=0;i<n;i++)
             cin>>cost[i]>>fun[i];
-        memset(t,0,sizeof(t));
-        int result = knapsack(budget,cost,fun,n);
-        cout<<result<<" "<<t[n][budget]<<endl;
+
+        for ( i = 1 ; i < n+1 ; i++ )
+        {
+            for ( j = 1 ; j < budget+1 ; j++ )
+            {
+                if ( cost[i-1] <= j ) {
+                    t[i][j] = max ( t[i-1][j] , t[i-1][j-cost[i-1]] + fun[i-1] );
+                }
+                else
+                    t[i][j] = t[i-1][j];
+            }
+        }
+        i = budget;
+	    while ( t[n][i-1] == t[n][i] )
+        {
+		    i--;
+	    }
+        cout<<i<<" "<<t[n][budget]<<endl;
+        for ( i = 0 ; i < n+1 ; i++ )
+        {
+		    free(t[i]);
+        }
+        free(t);
+        free(cost);
+        free(fun);
     }
     return 0;
 }

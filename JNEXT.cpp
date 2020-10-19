@@ -14,11 +14,7 @@ int findNum(int j, int arr[],int n)
     }
     return idx;
 }
-void reverseArr(int arr[], int start, int end)
-{
-    for(int i=start,j=0;i<=((start-end)/2);i++,j++)
-        swap(arr[i],arr[end-j]);
-}
+
 int main()
 {
     int t;
@@ -48,14 +44,7 @@ int main()
                 break;
         }
         int idx = findNum(j, arr, n); 
-        /*for(int i=0;i<n;i++)
-            cout<<arr[i];
-            cout<<endl;*/
         swap(arr[j],arr[idx]);
-        /*for(int i=0;i<n;i++)
-            cout<<arr[i];
-            cout<<endl;*/
-       // reverseArr(arr,j+1,n-1);
         sort(arr+j+1,arr+n);
         for(int i=0;i<n;i++)
             cout<<arr[i];

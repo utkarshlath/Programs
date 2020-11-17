@@ -16,15 +16,14 @@ int findsum(int prefix1[],int prefix2[],map<int, int> pair1,int n1,int n2)
             --x;
             sum = max(sum + prefix1[itr->first]-prefix1[x->first],sum + prefix2[itr->second]-prefix2[x->second]);
         }
-        //cout<<sum<<endl;
         ++i;
     }
     auto itr = pair1.end();
     itr--;
-    //cout<<prefix1[n1-1]<<" "<<prefix1[itr->first]<<" "<<prefix2[n2-1]<<" "<<prefix2[itr->second]<<endl;
     sum = max(sum+prefix1[n1-1]-prefix1[itr->first],sum+prefix2[n2-1]-prefix2[itr->second]);
     return sum;
 }
+
 int main()
 {
     while(true)
@@ -34,7 +33,6 @@ int main()
         if(!n1)
             break;
         int arr1[n1],prefix1[n1];
-        
         for(int i=0;i<n1;i++)
         {
             cin>>arr1[i];
@@ -42,8 +40,7 @@ int main()
                 prefix1[i]=arr1[i];
             else
                 prefix1[i]=prefix1[i-1]+arr1[i];
-        }
-            
+        }  
         cin>>n2;
         int arr2[n2],prefix2[n2];
         for(int i=0;i<n2;i++)
@@ -78,10 +75,6 @@ int main()
             cout<<max(prefix1[n1-1],prefix2[n2-1])<<endl;
             continue;
         } 
-        // for(auto itr=pair1.begin();itr!=pair1.end();++itr)
-        // {
-        //     cout<<itr->first<<" "<<itr->second<<endl;
-        // }
         int sum = findsum(prefix1,prefix2,pair1,n1,n2);
         cout<<sum<<endl;
     }

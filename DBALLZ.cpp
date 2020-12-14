@@ -1,6 +1,6 @@
 #include<bits/stdc++.h>
 using namespace std;
-
+ 
 int main()
 {
     int t;
@@ -14,13 +14,19 @@ int main()
             cin>>energy[i];
         for(int i=0;i<len;i++)
             cin>>time[i];
-        int dp[totalE+1];
+        int dp[len+1][totalE+1];
         memset(dp,0,sizeof(dp));
-        for (int i=0; i<=totalE; i++)
-            for (int j=0; j<len; j++)
-                if (energy[j] <= i)
-                    dp[i] = max(dp[i], dp[i-energy[j]] + time[j]);
-        cout<<dp[totalE]<<endl;
+        for(int i=1;i<=len;i++)
+        {
+            for(int j=1;j<=totalE;j++)
+            {
+                if(energy[i-1]<=j)
+                    dp[i][j] = max(dp[i-1][j],time[i-1]+dp[i][j-energy[i-1]]);
+                else
+                    dp[i][j] = dp[i-1][j];
+            }
+        }
+        cout<<dp[len][totalE]<<endl;
     }
     return 0;
 }

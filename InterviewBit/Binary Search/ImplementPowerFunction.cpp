@@ -1,23 +1,18 @@
-int Solution::pow(int x, int n, int d) {
-    if(x==0)
-        return 0;
+long long int power(int x, int n, int d){
     if(n==0)
         return 1;
-    long long int base=x,ans=1;
-     while (n > 0) 
-    {
-        if (n % 2 == 1)
-        {
-            ans = (ans * base) % d;
-            n--;
-        } 
-        else
-        {
-            base = (base * base) % d;
-            n /= 2;
-        }
-    }
-   if (ans < 0) 
-        ans = (ans + d) % d;
-  return ans ;
+    long long int temp = power(x,n/2,d);
+    if(n%2==0)
+        return ((temp%d)*(temp%d))%d;
+    else
+        return ((x%d)*(((temp%d)*(temp%d))%d)%d);
+}
+int Solution::pow(int x, int n, int d) {
+    
+    if(x<0)
+        x+=d;
+    if(x==0)
+        return 0;
+    long long int ans=power(x,n,d);
+    return ans%d;
 }
